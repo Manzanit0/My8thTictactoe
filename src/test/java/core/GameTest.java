@@ -18,8 +18,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class GameTest {
 
-    //TODO: check -  http://www.vogella.com/tutorials/JUnit/article.html
-
     @Test
     public void testDefaultPlayerIsPlayer1() {
         Player player1 = new Computer("X", new RulesAI());
