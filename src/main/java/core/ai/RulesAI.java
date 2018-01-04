@@ -1,67 +1,42 @@
 package core.ai;
 
+import core.ai.rulesAI.*;
 import core.board.Board;
-import core.board.Tile;
 import core.players.Player;
 
 /**
  * Implements a rule-based algorithm to make the best possible move in a Tic-Tac-Toe board.
+ * The approach taken is an implementation of the Chain-of-responsibility pattern.
  */
 public class RulesAI implements ComputerAI {
+    /**
+     * Set of rules/strategies to decide the next move in priority order.
+     */
+    protected static final MoveStrategy[] STRATEGIES = {
+            new WinStrategy(),
+            new BlockWinStrategy(),
+            new ForkStrategy(),
+            new BlockForkStrategy(),
+            new RandomMoveStrategy()
+    };
 
-    //TODO: fucking tic tac toe algorithm...
-
+    /**
+     * Apply the different tile-checking strategies available in priority order in order to make the first
+     * available move.
+     * @param board the board in its current status.
+     * @param currentPlayer the player to move next.
+     */
     public void makeBestMove(Board board, Player currentPlayer){
-        Tile[] availableTiles = board.getAvailableTiles();
-
-        // If there is a winning move, take it.
-        for (Tile availableTile : availableTiles){
-            availableTile.check(currentPlayer);
-            if(isWinningMove(board, availableTile)) return;
-            availableTile.uncheck();
+        if(board.isEmpty()){
+            // This would only be "the best move" in a 3x3 board.
+            board.getTile(1,1).check(currentPlayer);
+            return;
         }
 
-        // If the opponent has a winning move, block it.
-        for (Tile availableTile : availableTiles){
-            availableTile.check(currentPlayer);
-            if(isBlockingOpponentWinningMove(board, availableTile)) return;
-            availableTile.uncheck();
+        for(MoveStrategy strategy : STRATEGIES) {
+            if (strategy.checkTile(board, currentPlayer)) {
+                break;
+            }
         }
-
-        availableTiles[0].check(currentPlayer);
-
-        // If you can create a fork, do it.
-        // TODO
-
-        // If your opponent can create a fork, block it.
-        // TODO
-
-        // Otherwise just choose a random one.
-    }
-
-    private boolean isWinningMove(Board board, Tile tileToCheck){
-        Player currentPlayer = tileToCheck.getCheckingPlayer();
-
-        if (board.hasWon(currentPlayer) || board.isBoardComplete()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isBlockingOpponentWinningMove(Board board, Tile tileToCheck){
-        Player currentPlayer = tileToCheck.getCheckingPlayer();
-
-        // game.changeTurn(); //FIXME - not needed pls
-        tileToCheck.check(currentPlayer);
-
-        if (board.hasWon(currentPlayer) || board.isBoardComplete()) {
-            tileToCheck.uncheck();
-            // game.changeTurn(); //FIXME
-            return true;
-        }
-
-        tileToCheck.uncheck();
-        return false;
     }
 }

@@ -79,6 +79,20 @@ public class Board {
         return COLUMN_COUNT;
     }
 
+    public List<Player> getPlayers(){
+        List<Player> players = new ArrayList<Player>();
+        for(int i = 0; i < ROW_COUNT; i++){
+            for(int j = 0; j < COLUMN_COUNT; j++){
+                Player player = board[i][j].getCheckingPlayer();
+                if(player != null && !players.contains(player)){
+                    players.add(player);
+                }
+            }
+        }
+
+        return players;
+    }
+
     public Boolean isBoardComplete(){
         for(int i = 0; i < ROW_COUNT; i++){
             for(int j = 0; j < COLUMN_COUNT; j++){
@@ -89,6 +103,10 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public Boolean isEmpty(){
+        return getAvailableTiles().length == ROW_COUNT*COLUMN_COUNT;
     }
 
     public Boolean hasWon(Player player){

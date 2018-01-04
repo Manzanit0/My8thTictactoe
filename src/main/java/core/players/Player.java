@@ -15,4 +15,9 @@ public abstract class Player {
     }
 
     public abstract void makeMove(Board board) throws TicTacToeException;
+
+    @Override
+    public boolean equals(Object player){
+        return this.symbol == ((Player) player).getSymbol();
+    }
 }

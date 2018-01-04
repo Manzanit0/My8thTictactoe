@@ -26,10 +26,10 @@ public class Game {
     }
 
     public void chooseInitialPlayer(String symbol) throws TicTacToeException {
-        if(player1.getSymbol().equals(symbol)){
+        if(player1.getSymbol().equalsIgnoreCase(symbol)){
             chooseInitialPlayer(player1);
         }
-        else if(player2.getSymbol().equals(symbol)){
+        else if(player2.getSymbol().equalsIgnoreCase(symbol)){
             chooseInitialPlayer(player2);
         }
         else{
