@@ -35,7 +35,32 @@ public class Application {
             return;
         }
 
-        // Define the initial player. If an exception arises, Player 1 is set as default.
+        chooseInitialPlayer(game);
+
+        printGameBoard(game.getBoard());
+
+        do {
+            try {
+                makeNextMove(game);
+            }
+            catch (Exception ex) {
+                System.out.println(ex.getMessage());
+                continue;
+            }
+
+            clearConsole();
+            printGameBoard(game.getBoard());
+
+            // Print end-game results.
+            if(isGameEnded(game)) break;
+
+            game.changeTurn();
+        } while (!game.isBoardComplete());
+
+        input.close();
+    }
+
+    private static void chooseInitialPlayer(Game game){
         System.out.print("Choose starting player: ");
         String symbol = input.nextLine();
 
@@ -45,48 +70,53 @@ public class Application {
         catch (TicTacToeException ex){
             System.out.println(ex.getMessage());
         }
+    }
 
-        // Initial board display.
-        printGameBoard(game.getBoard());
+    private static int[] getHumanInput(){
+        Scanner scanner = new Scanner(System.in);
 
-        do {
-            try {
+        Matcher matcher;
 
-                // Make the next move, be it human or computer.
-                if (game.getCurrentPlayer() instanceof Human) {
-                    System.out.println("Enter the row and column of the tile you want to check:\n");
-                    int[] move = getHumanInput();
-                    game.makeMove(move[0], move[1]);
+        do{
+            String input = scanner.next();
 
-                } else {
-                    System.out.println("Please wait - the computer is thinking its next move.");
-                    game.makeMove();
-                    Thread.sleep(2000); // UX :-)
-                }
-            }
-            catch (Exception ex) {
-                System.out.println(ex.getMessage());
-                continue;
+            String patternString = "^([0-9]),([0-9])$"; // NOTE: The number range (1-3) is being validated in the backend.
+            Pattern pattern = Pattern.compile(patternString);
+            matcher = pattern.matcher(input);
+
+            if(!matcher.matches()){
+                System.out.println("Invalid input. Please give the coordinates of the tile you want to check with the format \"row,column\"");
             }
 
-            // Re-print board after the move.
-            clearConsole();
-            printGameBoard(game.getBoard());
+        }while (!matcher.matches());
 
-            // End-game results.
-            if(game.hasCurrentPlayerWon()){
-                System.out.println("Player " + game.getCurrentPlayer().getSymbol() + " has won!");
-                break;
-            }
-            if(game.isTie()){
-                System.out.println("The game is tied!");
-                break;
-            }
+        return new int[]{ Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)) };
+    }
 
-            game.changeTurn();
-        } while (!game.isBoardComplete());
+    private static void makeNextMove(Game game) throws Exception{
+        if (game.getCurrentPlayer() instanceof Human) {
+            System.out.println("Enter the row and column of the tile you want to check:\n");
+            int[] move = getHumanInput();
+            game.makeMove(move[0], move[1]);
 
-        input.close();
+        } else {
+            System.out.println("Please wait - the computer is thinking its next move.");
+            game.makeMove();
+            Thread.sleep(2000); // UX :-)
+        }
+    }
+
+    private static boolean isGameEnded(Game game){
+        if(game.hasCurrentPlayerWon()){
+            System.out.println("Player " + game.getCurrentPlayer().getSymbol() + " has won!");
+            return true;
+        }
+        if(game.isTie()){
+            System.out.println("The game is tied!");
+            return true;
+        }
+
+        return false;
     }
 
     private static void printGameBoard(Board board){
@@ -109,29 +139,8 @@ public class Application {
         }
     }
 
-    public final static void clearConsole() {
+    private static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-    }
-
-    private static int[] getHumanInput(){
-        Scanner scanner = new Scanner(System.in);
-
-        Matcher matcher;
-
-        do{
-            String input = scanner.next();
-
-            String patternString = "^([0-9]),([0-9])$"; // NOTE: The number range (1-3) is being validated in the backend.
-            Pattern pattern = Pattern.compile(patternString);
-            matcher = pattern.matcher(input);
-
-            if(!matcher.matches()){
-                System.out.println("Invalid input. Please give the coordinates of the tile you want to check with the format \"row,column\"");
-            }
-
-        }while (!matcher.matches());
-
-        return new int[]{ Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)) };
     }
 }
