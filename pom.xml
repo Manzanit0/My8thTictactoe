@@ -30,7 +30,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ConsoleApp</mainClass>
+                            <mainClass>console.Application</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

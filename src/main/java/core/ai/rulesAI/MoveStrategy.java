@@ -24,6 +24,6 @@ public abstract class MoveStrategy {
             }
         }
 
-        return null;
+        return null; //TODO - NotAPlayer class? throw exception?
     }
 }
