@@ -28,7 +28,7 @@ public class Application {
 
         // Initialize the game with its players and symbols from the CLI.
         try{
-            game = CliOptionsParser.parseOptions(args);
+            game = CliOptionsParser.parseOptions(args); // TODO (task) - instead of parsing a set of args, offer the user a menu.
         }
         catch (ParseException ex){
             System.out.println("An error has been found with the arguments: " + ex.getMessage());
@@ -94,7 +94,7 @@ public class Application {
     }
 
     private static void makeNextMove(Game game) throws Exception{
-        if (game.getCurrentPlayer() instanceof Human) {
+        if (game.getCurrentPlayer() instanceof Human) { // TODO (task): remove this type check from the frontend.
             System.out.println("Enter the row and column of the tile you want to check:\n");
             int[] move = getHumanInput();
             game.makeMove(move[0], move[1]);
