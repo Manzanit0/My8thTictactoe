@@ -3,7 +3,6 @@ package console;
 import core.Game;
 import core.ai.RulesAI;
 import core.players.Computer;
-import core.players.Human;
 import core.players.Player;
 import org.apache.commons.cli.*;
 
@@ -16,12 +15,12 @@ public class CliOptionsParser {
         String p1Marker = commandLine.getOptionValue("p1");
         Player player1 = commandLine.hasOption("p1IsComputer") ?
                 new Computer(p1Marker, new RulesAI()) :
-                new Human(p1Marker);
+                new ConsolePlayer(p1Marker);
 
         String p2Marker = commandLine.getOptionValue("p2");
         Player player2 = commandLine.hasOption("p2IsComputer") ?
                 new Computer(p2Marker, new RulesAI()) :
-                new Human(p2Marker);
+                new ConsolePlayer(p2Marker);
 
         return new Game(player1, player2);
     }
