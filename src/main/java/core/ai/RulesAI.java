@@ -27,9 +27,9 @@ public class RulesAI implements ComputerAI {
      * @param currentPlayer the player to move next.
      */
     public void makeBestMove(Board board, Player currentPlayer){
-        if(board.isEmpty()){
+        if(!board.getTile(1,1).isChecked()){
             // This would only be "the best move" in a 3x3 board.
-            board.getTile(1,1).check(currentPlayer); //TODO (task) - atm the machine can be beaten. I think this has to do with it.
+            board.getTile(1,1).check(currentPlayer);
             return;
         }
 
