@@ -6,7 +6,9 @@ import core.players.Computer;
 import core.players.Player;
 import org.apache.commons.cli.*;
 
+@Deprecated
 public class CliOptionsParser {
+    @Deprecated
     public static Game parseOptions(String[] args) throws ParseException {
         CommandLineParser parser = new DefaultParser();
         Options cmdOptions = getCmdOptions();
@@ -25,6 +27,7 @@ public class CliOptionsParser {
         return new Game(player1, player2);
     }
 
+    @Deprecated
     private static Options getCmdOptions(){
         Options options = new Options();
 

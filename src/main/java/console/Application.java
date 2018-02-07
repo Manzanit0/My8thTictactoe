@@ -3,7 +3,6 @@ package console;
 import core.Game;
 import core.board.Board;
 import core.exceptions.TicTacToeException;
-import org.apache.commons.cli.*;
 
 import java.util.Scanner;
 
@@ -18,16 +17,8 @@ public class Application {
     private static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Game game;
-
-        // Initialize the game with its players and symbols from the CLI.
-        try{
-            game = CliOptionsParser.parseOptions(args); // TODO (task) - instead of parsing a set of args, offer the user a menu.
-        }
-        catch (ParseException ex){
-            System.out.println("An error has been found with the arguments: " + ex.getMessage());
-            return;
-        }
+        GameInitializer menu = new GameInitializer();
+        Game game = menu.initGame();
 
         chooseInitialPlayer(game);
 
@@ -79,6 +70,7 @@ public class Application {
         return false;
     }
 
+    // FIXME - sometimes the first two symbols painted have the same colour.
     private static void printGameBoard(Board board){
         String firstPlayer = board.getTile(0,0).getCheck();
 
