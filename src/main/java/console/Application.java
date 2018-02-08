@@ -17,10 +17,8 @@ public class Application {
     private static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        GameInitializer menu = new GameInitializer();
-        Game game = menu.initGame();
-
-        chooseInitialPlayer(game);
+        GameBuilder gBuilder = new GameBuilder(input);
+        Game game = gBuilder.buildGame();
 
         printGameBoard(game.getBoard());
 
@@ -43,18 +41,6 @@ public class Application {
         } while (!game.isBoardComplete());
 
         input.close();
-    }
-
-    private static void chooseInitialPlayer(Game game){
-        System.out.print("Choose starting player: ");
-        String symbol = input.nextLine();
-
-        try {
-            game.chooseInitialPlayer(symbol);
-        }
-        catch (TicTacToeException ex){
-            System.out.println(ex.getMessage());
-        }
     }
 
     private static boolean isGameEnded(Game game){

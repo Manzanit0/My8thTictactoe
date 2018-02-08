@@ -2,20 +2,29 @@ package console;
 
 import core.Game;
 import core.ai.RulesAI;
+import core.exceptions.TicTacToeException;
 import core.players.Computer;
-import core.players.Human;
 import core.players.Player;
 
 import java.util.Scanner;
 
-public class GameInitializer {
-    private Scanner input = new Scanner(System.in); // TODO - this needs to be closed at some point.
-
+public class GameBuilder {
     private Player player1;
     private Player player2;
+    private Scanner input;
 
-    // TODO -  this doesn't really initialize the game... it's just the wizard.
-    public Game initGame() {
+    public GameBuilder(Scanner input){
+        this.input = input;
+    }
+
+    public Game buildGame(){
+        startGameConfigMenu();
+        Game game = new Game(player1, player2);
+        chooseInitialPlayer(game);
+        return game;
+    }
+
+    private void startGameConfigMenu() {
         boolean pendingConfiguration = true;
 
         do {
@@ -24,16 +33,19 @@ public class GameInitializer {
 
             switch (option) {
                 case 1: {
-                    player1 = configurePlayer();
+                    player1 = getPlayerConfiguration();
                     break;
                 }
                 case 2: {
-                    player2 = configurePlayer();
+                    player2 = getPlayerConfiguration();
                     break;
                 }
                 case 3: {
                     if(player1 == null || player2 == null) {
                         System.out.println("You must first configure both players!");
+                    }
+                    else if(player1.getSymbol().equals(player2.getSymbol())){
+                        System.out.println("Both players can't have the same symbol!");
                     }
                     else {
                         pendingConfiguration = false;
@@ -49,8 +61,6 @@ public class GameInitializer {
             System.out.print("\033[H\033[2J");
             System.out.flush();
         } while(pendingConfiguration);
-
-        return new Game(player1, player2);
     }
 
     private void printMenu(){
@@ -63,15 +73,15 @@ public class GameInitializer {
         System.out.print("Select an option: ");
     }
 
-    private Player configurePlayer() {
+    private Player getPlayerConfiguration() {
         Player player;
-        System.out.println("Will the player be computer-controlled?");
+        System.out.println("Will the player be computer-controlled? (Y/N)");
         String isComputer = input.next();
 
-        System.out.println("What's the player's symbol?"); // TODO - verify that the symbol is different to the other player.
+        System.out.println("What's the player's symbol?");
         String symbol = input.next();
 
-        if(isComputer.equalsIgnoreCase("yes")) { // TODO - The user doesn't know if he must input yes, true, 1... UX pls.
+        if(isComputer.equalsIgnoreCase("Y") || isComputer.equalsIgnoreCase("yes")) {
             player = new Computer(symbol, new RulesAI());
         }
         else {
@@ -79,5 +89,17 @@ public class GameInitializer {
         }
 
         return player;
+    }
+
+    private void chooseInitialPlayer(Game game){
+        System.out.print("Choose starting player: ");
+        String symbol = input.nextLine(); // FIXME - this is buggy. There's probably some character in the buffer.
+
+        try {
+            game.chooseInitialPlayer(symbol);
+        }
+        catch (TicTacToeException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }
