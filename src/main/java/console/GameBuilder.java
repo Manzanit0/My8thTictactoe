@@ -13,11 +13,11 @@ public class GameBuilder {
     private Player player2;
     private Scanner input;
 
-    public GameBuilder(Scanner input){
+    public GameBuilder(Scanner input) {
         this.input = input;
     }
 
-    public Game buildGame(){
+    public Game buildGame() {
         startGameConfigMenu();
         Game game = new Game(player1, player2);
         setInitialPlayer(game);
@@ -35,8 +35,7 @@ public class GameBuilder {
             int option = 0;
             try {
                 option = input.nextInt();
-            }
-            catch (java.util.InputMismatchException ex) {
+            } catch (java.util.InputMismatchException ex) {
                 System.out.println("Please select a valid option (1, 2 or 3).");
                 input.next(); // Empty buffer.
                 continue;
@@ -52,13 +51,11 @@ public class GameBuilder {
                     break;
                 }
                 case 3: {
-                    if(player1 == null || player2 == null) {
+                    if (player1 == null || player2 == null) {
                         System.out.println("You must first configure both players!");
-                    }
-                    else if(player1.getSymbol().equals(player2.getSymbol())){
+                    } else if (player1.getSymbol().equals(player2.getSymbol())) {
                         System.out.println("Both players can't have the same symbol!");
-                    }
-                    else {
+                    } else {
                         pendingConfiguration = false;
                     }
                     break;
@@ -67,10 +64,10 @@ public class GameBuilder {
                     System.out.println("Please select a valid option (1, 2 or 3).");
                 }
             }
-        } while(pendingConfiguration);
+        } while (pendingConfiguration);
     }
 
-    private void printMenu(){
+    private void printMenu() {
         System.out.println("#########################");
         System.out.println("##  The 8th Tictactoe  ##");
         System.out.println("#########################\n");
@@ -87,24 +84,22 @@ public class GameBuilder {
         System.out.println("What's the player's symbol?");
         String symbol = input.next();
 
-        if(isComputer.equalsIgnoreCase("Y") || isComputer.equalsIgnoreCase("yes")) {
+        if (isComputer.equalsIgnoreCase("Y") || isComputer.equalsIgnoreCase("yes")) {
             player = new Computer(symbol, new RulesAI());
-        }
-        else {
+        } else {
             player = new ConsolePlayer(symbol);
         }
 
         return player;
     }
 
-    public void setInitialPlayer(Game game){
+    public void setInitialPlayer(Game game) {
         System.out.print("Choose starting player: ");
         String symbol = input.next();
 
         try {
             game.chooseInitialPlayer(symbol);
-        }
-        catch (TicTacToeException ex){
+        } catch (TicTacToeException ex) {
             System.out.println(ex.getMessage());
         }
     }

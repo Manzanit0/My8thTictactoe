@@ -9,15 +9,15 @@ import core.players.Player;
  * Strategy to mark an available tile only if it blocks an opponent win.
  */
 public class BlockWinStrategy extends MoveStrategy {
-   @Override
-    public boolean checkTile(Board board, Player player){
+    @Override
+    public boolean checkTile(Board board, Player player) {
         Player opponent = getOpponent(board, player);
-        if(opponent == null) return false;
+        if (opponent == null) return false;
 
         Tile[] availableTiles = board.getAvailableTiles();
-        for (Tile availableTile : availableTiles){
+        for (Tile availableTile : availableTiles) {
             availableTile.check(opponent);
-            if(isWinningMove(board, availableTile)){
+            if (isWinningMove(board, availableTile)) {
                 availableTile.check(player);
                 return true;
             }

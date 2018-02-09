@@ -23,17 +23,18 @@ public class RulesAI implements ComputerAI {
     /**
      * Apply the different tile-checking strategies available in priority order in order to make the first
      * available move.
-     * @param board the board in its current status.
+     *
+     * @param board         the board in its current status.
      * @param currentPlayer the player to move next.
      */
-    public void makeBestMove(Board board, Player currentPlayer){
-        if(!board.getTile(1,1).isChecked()){
+    public void makeBestMove(Board board, Player currentPlayer) {
+        if (!board.getTile(1, 1).isChecked()) {
             // This would only be "the best move" in a 3x3 board.
-            board.getTile(1,1).check(currentPlayer);
+            board.getTile(1, 1).check(currentPlayer);
             return;
         }
 
-        for(MoveStrategy strategy : STRATEGIES) {
+        for (MoveStrategy strategy : STRATEGIES) {
             if (strategy.checkTile(board, currentPlayer)) {
                 break;
             }

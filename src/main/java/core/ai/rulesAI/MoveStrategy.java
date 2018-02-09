@@ -7,7 +7,7 @@ import core.players.Player;
 public abstract class MoveStrategy {
     public abstract boolean checkTile(Board board, Player player);
 
-    protected boolean isWinningMove(Board board, Tile tileToCheck){
+    protected boolean isWinningMove(Board board, Tile tileToCheck) {
         Player currentPlayer = tileToCheck.getCheckingPlayer();
 
         if (board.hasWon(currentPlayer) || board.isBoardComplete()) {
@@ -17,9 +17,9 @@ public abstract class MoveStrategy {
         return false;
     }
 
-    protected Player getOpponent(Board board, Player player){
-        for(Player iteratedPlayer : board.getPlayers()){
-            if(!iteratedPlayer.equals(player)){
+    protected Player getOpponent(Board board, Player player) {
+        for (Player iteratedPlayer : board.getPlayers()) {
+            if (!iteratedPlayer.equals(player)) {
                 return iteratedPlayer;
             }
         }

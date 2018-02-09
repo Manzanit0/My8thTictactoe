@@ -11,20 +11,20 @@ public class Tile {
      */
     private Player player;
 
-    public void check(Player player){
+    public void check(Player player) {
         this.player = player;
     }
 
-    public void uncheck(){
+    public void uncheck() {
         player = null;
     }
 
-    public Boolean isChecked(){
+    public Boolean isChecked() {
         return player != null;
     }
 
-    public String getCheck(){
-        return isChecked() ? player.getSymbol() :  " ";
+    public String getCheck() {
+        return isChecked() ? player.getSymbol() : " ";
     }
 
     public Player getCheckingPlayer() {

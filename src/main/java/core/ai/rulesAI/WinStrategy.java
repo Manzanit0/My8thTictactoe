@@ -9,12 +9,12 @@ import core.players.Player;
  */
 public class WinStrategy extends MoveStrategy {
     @Override
-    public boolean checkTile(Board board, Player player){
+    public boolean checkTile(Board board, Player player) {
         Tile[] availableTiles = board.getAvailableTiles();
 
-        for (Tile availableTile : availableTiles){
+        for (Tile availableTile : availableTiles) {
             availableTile.check(player);
-            if(isWinningMove(board, availableTile)){
+            if (isWinningMove(board, availableTile)) {
                 return true;
             }
 

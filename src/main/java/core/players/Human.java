@@ -7,7 +7,7 @@ public class Human extends Player {
     private int inputRow;
     private int inputCol;
 
-    public Human(String symbol){
+    public Human(String symbol) {
         super(symbol);
     }
 
@@ -16,7 +16,7 @@ public class Human extends Player {
         board.checkTile(inputRow, inputCol, this);
     }
 
-    public void setMoveInput(int row, int column){
+    public void setMoveInput(int row, int column) {
         inputRow = row;
         inputCol = column;
     }

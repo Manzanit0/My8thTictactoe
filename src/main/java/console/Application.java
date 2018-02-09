@@ -33,8 +33,7 @@ public class Application {
         do {
             try {
                 game.makeMove();
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 continue;
             }
@@ -42,10 +41,10 @@ public class Application {
             printGameBoard(game.getBoard());
 
             // Print end-game results.
-            if(isGameEnded(game)){
+            if (isGameEnded(game)) {
                 System.out.println("Want to rematch? (Y/N)");
                 String rematch = input.next();
-                if(rematch.equalsIgnoreCase("Y") || rematch.equalsIgnoreCase("yes")) {
+                if (rematch.equalsIgnoreCase("Y") || rematch.equalsIgnoreCase("yes")) {
                     game.resetBoard();
                     gBuilder.setInitialPlayer(game);
                     printGameBoard(game.getBoard());
@@ -62,12 +61,12 @@ public class Application {
         input.close();
     }
 
-    private static boolean isGameEnded(Game game){
-        if(game.hasCurrentPlayerWon()){
+    private static boolean isGameEnded(Game game) {
+        if (game.hasCurrentPlayerWon()) {
             System.out.println("Player " + game.getCurrentPlayer().getSymbol() + " has won!");
             return true;
         }
-        if(game.isTie()){
+        if (game.isTie()) {
             System.out.println("The game is tied!");
             return true;
         }
@@ -75,11 +74,11 @@ public class Application {
         return false;
     }
 
-    private static void printGameBoard(Board board){
+    private static void printGameBoard(Board board) {
         ConsoleUtils.clearConsole();
         System.out.println(ANSI_RESET + "-------------");
-        for(int i = 0; i < board.getRowCount(); i++){
-            for(int j = 0; j < board.getColumnCount(); j++){
+        for (int i = 0; i < board.getRowCount(); i++) {
+            for (int j = 0; j < board.getColumnCount(); j++) {
                 System.out.print(ANSI_RESET + "| ");
                 Player currentPlayer = board.getTile(i, j).getCheckingPlayer();
                 String color = currentPlayer == null ? ANSI_RESET : colorConfig.get(currentPlayer);

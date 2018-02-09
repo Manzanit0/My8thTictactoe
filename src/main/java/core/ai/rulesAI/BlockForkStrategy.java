@@ -14,19 +14,19 @@ public class BlockForkStrategy extends MoveStrategy {
     @Override
     public boolean checkTile(Board board, Player player) {
         Player opponent = getOpponent(board, player);
-        if(opponent == null) return false;
+        if (opponent == null) return false;
 
         Tile[] availableTiles = board.getAvailableTiles();
         ArrayList<Tile> forkMoves = new ArrayList<Tile>();
 
-        for (Tile availableTile : availableTiles){
+        for (Tile availableTile : availableTiles) {
             availableTile.check(opponent);
             Tile[] futureAvailableTiles = board.getAvailableTiles();
 
-            for(Tile futureAvailableTile : futureAvailableTiles){
+            for (Tile futureAvailableTile : futureAvailableTiles) {
                 futureAvailableTile.check(opponent);
 
-                if(isWinningMove(board, availableTile)){
+                if (isWinningMove(board, availableTile)) {
                     forkMoves.add(availableTile);
                 }
 
@@ -39,13 +39,12 @@ public class BlockForkStrategy extends MoveStrategy {
         // This covers the scenario in which the opponent will have the option to fork in two different places
         // and if the machine tries to block any of those forks, the opponent will effectively block his win
         // and at the same time create a new fork.
-        if(forkMoves.size() == 1) {
+        if (forkMoves.size() == 1) {
             forkMoves.get(0).check(player);
             return true;
-        }
-        else if(forkMoves.size() > 1) {
-            for(Tile tile : availableTiles){
-                if(!forkMoves.contains(tile)){
+        } else if (forkMoves.size() > 1) {
+            for (Tile tile : availableTiles) {
+                if (!forkMoves.contains(tile)) {
                     tile.check(player);
                     return true;
                 }

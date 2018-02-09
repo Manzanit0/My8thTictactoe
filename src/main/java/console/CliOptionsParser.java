@@ -28,7 +28,7 @@ public class CliOptionsParser {
     }
 
     @Deprecated
-    private static Options getCmdOptions(){
+    private static Options getCmdOptions() {
         Options options = new Options();
 
         //CLI options.

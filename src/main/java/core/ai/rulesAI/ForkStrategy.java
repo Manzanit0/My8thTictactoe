@@ -14,16 +14,16 @@ public class ForkStrategy extends MoveStrategy {
         Tile[] availableTiles = board.getAvailableTiles();
         int winConditions = 0;
 
-        for (Tile availableTile : availableTiles){
+        for (Tile availableTile : availableTiles) {
             availableTile.check(player);
             Tile[] futureAvailableTiles = board.getAvailableTiles();
 
-            for(Tile futureAvailableTile : futureAvailableTiles){
+            for (Tile futureAvailableTile : futureAvailableTiles) {
                 futureAvailableTile.check(player);
 
-                if(isWinningMove(board, availableTile)){
+                if (isWinningMove(board, availableTile)) {
                     winConditions++;
-                    if(winConditions > 1){
+                    if (winConditions > 1) {
                         futureAvailableTile.uncheck();
                         return true;
                     }
