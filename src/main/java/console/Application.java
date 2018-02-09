@@ -2,7 +2,6 @@ package console;
 
 import core.Game;
 import core.board.Board;
-import core.exceptions.TicTacToeException;
 import core.players.Player;
 
 import java.util.HashMap;
@@ -43,7 +42,18 @@ public class Application {
             printGameBoard(game.getBoard());
 
             // Print end-game results.
-            if(isGameEnded(game)) break;
+            if(isGameEnded(game)){
+                System.out.println("Want to rematch? (Y/N)");
+                String rematch = input.next();
+                if(rematch.equalsIgnoreCase("Y") || rematch.equalsIgnoreCase("yes")) {
+                    game.resetBoard();
+                    gBuilder.setInitialPlayer(game);
+                    printGameBoard(game.getBoard());
+                    printCurrentPlayerInfo(game.getCurrentPlayer());
+                    continue;
+                }
+                break;
+            }
 
             game.changeTurn();
             printCurrentPlayerInfo(game.getCurrentPlayer());

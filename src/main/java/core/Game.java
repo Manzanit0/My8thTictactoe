@@ -83,4 +83,8 @@ public class Game {
     public Board getBoard() {
         return board;
     }
+
+    public void resetBoard(){
+        board = new Board();
+    }
 }

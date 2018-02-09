@@ -20,7 +20,7 @@ public class GameBuilder {
     public Game buildGame(){
         startGameConfigMenu();
         Game game = new Game(player1, player2);
-        chooseInitialPlayer(game);
+        setInitialPlayer(game);
         return game;
     }
 
@@ -97,7 +97,7 @@ public class GameBuilder {
         return player;
     }
 
-    private void chooseInitialPlayer(Game game){
+    public void setInitialPlayer(Game game){
         System.out.print("Choose starting player: ");
         String symbol = input.next();
 
