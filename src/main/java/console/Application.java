@@ -29,6 +29,7 @@ public class Application {
         colorConfig.put(game.getPlayers()[1], ANSI_RED);
 
         printGameBoard(game.getBoard());
+        printCurrentPlayerInfo(game.getCurrentPlayer());
 
         do {
             try {
@@ -45,6 +46,7 @@ public class Application {
             if(isGameEnded(game)) break;
 
             game.changeTurn();
+            printCurrentPlayerInfo(game.getCurrentPlayer());
         } while (!game.isBoardComplete());
 
         input.close();
@@ -78,5 +80,9 @@ public class Application {
             System.out.print(ANSI_RESET + "|\n");
             System.out.println("-------------");
         }
+    }
+
+    private static void printCurrentPlayerInfo(Player currentPlayer) {
+        System.out.println("Current Player: " + colorConfig.get(currentPlayer) + currentPlayer.getSymbol() + ANSI_RESET);
     }
 }
