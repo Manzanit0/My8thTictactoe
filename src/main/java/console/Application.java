@@ -3,7 +3,10 @@ package console;
 import core.Game;
 import core.board.Board;
 import core.exceptions.TicTacToeException;
+import core.players.Player;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Application {
@@ -13,12 +16,17 @@ public class Application {
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_RESET = "\u001B[0m";
+    private static Map<Player, String> colorConfig;
 
     private static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
         GameBuilder gBuilder = new GameBuilder(input);
         Game game = gBuilder.buildGame();
+
+        colorConfig = new HashMap<Player, String>();
+        colorConfig.put(game.getPlayers()[0], ANSI_GREEN);
+        colorConfig.put(game.getPlayers()[1], ANSI_RED);
 
         printGameBoard(game.getBoard());
 
@@ -56,22 +64,17 @@ public class Application {
         return false;
     }
 
-    // FIXME - sometimes the first two symbols painted have the same colour.
     private static void printGameBoard(Board board){
-        String firstPlayer = board.getTile(0,0).getCheck();
-
         System.out.println(ANSI_RESET + "-------------");
         for(int i = 0; i < board.getRowCount(); i++){
             for(int j = 0; j < board.getColumnCount(); j++){
                 System.out.print(ANSI_RESET + "| ");
-                if(board.getTile(i, j).getCheck().equals(firstPlayer)){
-                    System.out.print(ANSI_GREEN + board.getTile(i, j).getCheck());
-                }
-                else{
-                    System.out.print(ANSI_RED + board.getTile(i, j).getCheck());
-                }
+                Player currentPlayer = board.getTile(i, j).getCheckingPlayer();
+                String color = currentPlayer == null ? ANSI_RESET : colorConfig.get(currentPlayer);
+                System.out.print(color + board.getTile(i, j).getCheck());
                 System.out.print(" ");
             }
+
             System.out.print(ANSI_RESET + "|\n");
             System.out.println("-------------");
         }
