@@ -27,9 +27,20 @@ public class GameBuilder {
     private void startGameConfigMenu() {
         boolean pendingConfiguration = true;
 
+        printMenu();
+
         do {
-            printMenu();
-            int option = input.nextInt(); // FIXME - breaks if the user enters ""NAN"".
+            System.out.println("Select an option: ");
+
+            int option = 0;
+            try {
+                option = input.nextInt();
+            }
+            catch (java.util.InputMismatchException ex) {
+                System.out.println("Please select a valid option (1, 2 or 3).");
+                input.next(); // Empty buffer.
+                continue;
+            }
 
             switch (option) {
                 case 1: {
@@ -53,11 +64,9 @@ public class GameBuilder {
                     break;
                 }
                 default: {
-                    System.out.println("You must select option 1, 2 or 3!");
+                    System.out.println("Please select a valid option (1, 2 or 3).");
                 }
             }
-
-            ConsoleUtils.clearConsole();
         } while(pendingConfiguration);
     }
 
@@ -68,7 +77,6 @@ public class GameBuilder {
         System.out.println("1. Configure player 1");
         System.out.println("2. Configure player 2");
         System.out.println("3. Start game!\n");
-        System.out.print("Select an option: ");
     }
 
     private Player getPlayerConfiguration() {
