@@ -29,7 +29,7 @@ public class GameBuilder {
 
         do {
             printMenu();
-            int option = input.nextInt();
+            int option = input.nextInt(); // FIXME - breaks if the user enters ""NAN"".
 
             switch (option) {
                 case 1: {

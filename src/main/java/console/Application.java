@@ -39,7 +39,6 @@ public class Application {
                 continue;
             }
 
-            ConsoleUtils.clearConsole();
             printGameBoard(game.getBoard());
 
             // Print end-game results.
@@ -65,6 +64,7 @@ public class Application {
     }
 
     private static void printGameBoard(Board board){
+        ConsoleUtils.clearConsole();
         System.out.println(ANSI_RESET + "-------------");
         for(int i = 0; i < board.getRowCount(); i++){
             for(int j = 0; j < board.getColumnCount(); j++){

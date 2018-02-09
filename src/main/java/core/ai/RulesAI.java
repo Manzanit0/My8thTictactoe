@@ -12,7 +12,7 @@ public class RulesAI implements ComputerAI {
     /**
      * Set of rules/strategies to decide the next move in priority order.
      */
-    private static final MoveStrategy[] STRATEGIES = { // FIXME -  under some scenarios it still looses.
+    private static final MoveStrategy[] STRATEGIES = {
             new WinStrategy(),
             new BlockWinStrategy(),
             new ForkStrategy(),
