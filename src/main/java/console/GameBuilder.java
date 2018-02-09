@@ -93,7 +93,7 @@ public class GameBuilder {
 
     private void chooseInitialPlayer(Game game){
         System.out.print("Choose starting player: ");
-        String symbol = input.nextLine(); // FIXME - this is buggy. There's probably some character in the buffer.
+        String symbol = input.next();
 
         try {
             game.chooseInitialPlayer(symbol);
