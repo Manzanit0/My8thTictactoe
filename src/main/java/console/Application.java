@@ -39,7 +39,7 @@ public class Application {
                 continue;
             }
 
-            clearConsole();
+            ConsoleUtils.clearConsole();
             printGameBoard(game.getBoard());
 
             // Print end-game results.
@@ -78,10 +78,5 @@ public class Application {
             System.out.print(ANSI_RESET + "|\n");
             System.out.println("-------------");
         }
-    }
-
-    private static void clearConsole() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 }
